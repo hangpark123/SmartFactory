@@ -1,0 +1,14 @@
+<annotation>
+	<folder>image</folder>
+	<filename>123.jpg</filename>
+	<path>C:\Users\edu31\Desktop\YoloV8\image\123.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>3000</width>
+		<height>4000</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object><name>part</name><bndbox><xmin>892</xmin><ymin>1175</ymin><xmax>2236</xmax><ymax>3174</ymax></bndbox></object></annotation>
