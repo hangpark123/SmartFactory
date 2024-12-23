@@ -1,0 +1,9 @@
+train: C:/Users/edu31/YoloV8/dataset_camera2/images/train
+val: C:/Users/edu31/YoloV8/dataset_camera2/images/val
+
+# 클래스 수
+nc: 1
+
+# 클래스 이름 정의
+names:
+  0: part

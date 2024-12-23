@@ -2,7 +2,7 @@ import cv2
 import os
 
 # 저장 폴더 생성
-save_folder = "captured_images\captured_images_bottom"
+save_folder = "captured_images\captured_images_blue_side"
 os.makedirs(save_folder, exist_ok=True)
 
 # 카메라 초기화
@@ -10,7 +10,7 @@ camera = cv2.VideoCapture(1)  # USB 카메라가 기본 장치로 설정됨
 
 # 해상도 설정 (필요 시 조정)
 
-num_photos = 100
+num_photos = 10
 delay_between_photos = 0.01  # 초 단위 대기 시간
 
 for i in range(num_photos):

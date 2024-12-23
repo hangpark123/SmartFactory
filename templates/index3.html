@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컨베이어 벨트 실시간 모니터링</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --background-color: #ecf0f1;
+            --text-light: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+            --spacing: 1rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+            background-color: var(--background-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: var(--spacing) 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 var(--spacing);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .video-section {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing);
+        }
+
+        .video-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .video-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .video-container p {
+            padding: 1rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .count-container {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .count-container h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .count-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .count-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: var(--spacing);
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>컨베이어 벨트 실시간 모니터링</h1>
+        <p>불량품을 실시간으로 분류하는 시스템</p>
+    </header>
+
+    <main>
+        <div class="video-section">
+            <div class="video-container">
+                <img src="{{ url_for('video_feed') }}" alt="1번 카메라 스트림">
+                <p>1번 카메라</p>
+            </div>
+        </div>
+
+        <div class="video-section">
+            <div class="video-container">
+                <img src="{{ url_for('video_feed_2') }}" alt="2번 카메라 스트림">
+                <p>2번 카메라</p>
+            </div>
+            
+            <div class="count-container">
+                <h3>불량품 카운트</h3>
+                <div class="count-item">
+                    정상품
+                    <span class="count-number" id="normal_count">0</span>
+                </div>
+                <div class="count-item">
+                    불량품
+                    <span class="count-number" id="defect_count">0</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 실시간 모니터링 시스템</p>
+    </footer>
+
+    <script>
+        function updateCounts() {
+            fetch('/get_counts')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('normal_count').textContent = data.normal;
+                    document.getElementById('defect_count').textContent = data.defect;
+                })
+                .catch(error => console.error('Error updating counts:', error));
+        }
+
+        setInterval(updateCounts, 1000);
+    </script>
+</body>
+</html>
